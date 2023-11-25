@@ -92,8 +92,10 @@ function Login() {
             <Button variant="primary" type="submit">
               Login
             </Button>
+            <br />
+            <Link to='/forgetPassword'>Forget Password</Link>
           </Form>
-
+  <br />
           <p>
             Doesn't have an account?{" "}
             <Link to="/registration">Register here </Link>

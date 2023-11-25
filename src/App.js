@@ -10,6 +10,7 @@ import Welcome from "./components/Pages/Welcome";
 import Profile from "./components/Pages/Profile";
 import { useContext } from "react";
 import AuthContext from "./store/auth-context";
+import ForgotPassword from "./components/Pages/ForgotPassword";
 // import Login from './components/Pages/Registration';
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
     {authCtx.isLoggedIn && <Route path="/profile" element={<Profile/>} />} 
     <Route path="/registration" element={<Registration/>} />
     <Route path="/login" element={<Login/>} />
+    <Route path="/forgetPassword" element={<ForgotPassword/>}/>
     </Routes>
     </BrowserRouter>
   );
