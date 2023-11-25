@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -6,11 +6,14 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import styles from "./Login.module.css";
 import { Link, Navigate, useNavigate } from "react-router-dom";
+import AuthContext from "../../store/auth-context";
 
 function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const authCtx= useContext(AuthContext)
 
   const emailHandler = (e) => {
     setEmail(e.target.value);
@@ -44,6 +47,7 @@ function Login() {
         console.log(data);
         console.log(data.email);
         console.log(data.idToken);
+        authCtx.login(data.idToken)
         navigate("/", { replace: true });
       } else {
         response.json().then((data) => {
