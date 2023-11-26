@@ -5,9 +5,9 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import styles from "./Profile.module.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AuthContext from "../../store/auth-context";
-// import { faInstag} from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGithub } from "@fortawesome/free-brands-svg-icons";
 
 function Profile() {
   const [name, setName] = useState("");
@@ -55,28 +55,6 @@ function Profile() {
     }
   };
 
-  useEffect(() => {
-    fetch(
-      "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyB_o7vD1dv2xerksf4mLLdbKjlKU8zRKQw",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          idToken: authCtx.token,
-        }),
-      }
-    )
-      .then((res) => res.json())
-      .then((data) => {console.log(data)
-       let user= data.users[0]
-       console.log(user);
-       setName(user.email)
-       setPhotoUrl(user.photoUrl)
-    })
-      .catch((er) => {
-        alert("Error", er);
-      });
-  });
-
   return (
     <>
       <Container>
@@ -115,8 +93,7 @@ function Profile() {
         <Button variant="danger" type="submit">
           Submit
         </Button>
-        {/* <FontAwesomeIcon icon="fa-brands fa-github" />
-        <FontAwesomeIcon icon={faGithub} /> */}
+        <FontAwesomeIcon icon={faGithub} />
       </Form>
     </>
   );

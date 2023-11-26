@@ -27,48 +27,49 @@ function Registration() {
     setConfirmPswdValidate(false);
     setConfirmPswd(e.target.value);
   };
-  const submitHandler = async(e) => {
+  const submitHandler = async (e) => {
     console.log("kk");
     e.preventDefault();
     if (email.includes("@") === false) {
       setEmailValidate(true);
-      return
+      return;
     } else if (password.length < 6) {
       setPswdValidate(true);
-      return
+      return;
     } else if (password !== confirmPswd) {
       setConfirmPswdValidate(true);
-      return
+      return;
     }
-    let user={
-        email:email,
-        password:password,
-        returnSecureToken: true
-    }
-    try{
-  let response= await  fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyB_o7vD1dv2xerksf4mLLdbKjlKU8zRKQw',{
-        method:'POST',
-        body:JSON.stringify(user),
-        headers: {
-            'Content-Type': 'application/json'
-          }
-    })
-    if(response.ok){
-        console.log('User Sign Up succesfully');
-        setEmail('')
-        setConfirmPswd('')
-        setPassword('')
-    }else{
+    let user = {
+      email: email,
+      password: password,
+      returnSecureToken: true,
+    };
+    try {
+      let response = await fetch(
+        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyB_o7vD1dv2xerksf4mLLdbKjlKU8zRKQw",
+        {
+          method: "POST",
+          body: JSON.stringify(user),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (response.ok) {
+        console.log("User Sign Up succesfully");
+        setEmail("");
+        setConfirmPswd("");
+        setPassword("");
+      } else {
         response.json().then((data) => {
-            //show an error modal
-            alert(data.error.message)
-          })
+          //show an error modal
+          alert(data.error.message);
+        });
+      }
+    } catch {
+      alert("Error while sign Up ");
     }
-}catch{
-    alert('Error while sign Up ')
-}
-
-
   };
   return (
     <Container>
@@ -127,8 +128,10 @@ function Registration() {
               Register
             </Button>
           </Form>
-          
-          <p>Have an account? <Link to='/login'>Login here </Link></p>
+
+          <p>
+            Have an account? <Link to="/login">Login here </Link>
+          </p>
         </Col>
       </Row>
     </Container>

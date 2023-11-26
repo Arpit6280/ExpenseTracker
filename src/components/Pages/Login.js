@@ -13,7 +13,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const authCtx= useContext(AuthContext)
+  const authCtx = useContext(AuthContext);
 
   const emailHandler = (e) => {
     setEmail(e.target.value);
@@ -47,7 +47,7 @@ function Login() {
         console.log(data);
         console.log(data.email);
         console.log(data.idToken);
-        authCtx.login(data.idToken)
+        authCtx.login(data.idToken);
         navigate("/", { replace: true });
       } else {
         response.json().then((data) => {
@@ -93,9 +93,9 @@ function Login() {
               Login
             </Button>
             <br />
-            <Link to='/forgetPassword'>Forget Password</Link>
+            <Link to="/forgetPassword">Forget Password</Link>
           </Form>
-  <br />
+          <br />
           <p>
             Doesn't have an account?{" "}
             <Link to="/registration">Register here </Link>
