@@ -8,21 +8,63 @@ import Registration from './components/Pages/Registration';
 import Login from "./components/Pages/Login";
 import Welcome from "./components/Pages/Welcome";
 import Profile from "./components/Pages/Profile";
-import { Fragment, useContext, useState } from "react";
+import { Fragment, useCallback, useContext, useEffect, useState } from "react";
 import AuthContext from "./store/auth-context";
 import ForgotPassword from "./components/Pages/ForgotPassword";
 import AddExpense from "./components/AddExpense";
-// import Login from './components/Pages/Registration';
+
 
 function App() {
   const [isExpense,setIsExpense]=useState(false)
   const [expenses,setExpenses]=useState([]);
 
-  const addExpenses=(expense)=>{
-    setExpenses((prevState)=> {return[...prevState,expense]})
+  const fetchExpenses= useCallback( async()=>{
+     try{
+      const response= await fetch('https://react-http-62209-default-rtdb.firebaseio.com/expense.json')
+      if(response.ok){
+        const data= await response.json();
+        console.log(data);
+        const loadexpenses=[];
+        for(const key in data){
+          loadexpenses.push({
+            id:key,
+            category:data[key].category,
+            description:data[key].description,
+            price:data[key].price,
+            date:data[key].date
+          })
+         setExpenses(loadexpenses)
+        }
+      }else{
+        alert('Error')
+      }
+     }catch(e){
+      console.log(e);
+      alert('Error while fetching data from database',e)
+     }
+  },[]);
+
+  useEffect(()=>{
+   fetchExpenses();
+  },[fetchExpenses])
+
+  const addExpenses=async (expense)=>{
+    try{
+    const response= await fetch('https://react-http-62209-default-rtdb.firebaseio.com/expense.json',{
+      method:'POST',
+      body:JSON.stringify(expense),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+  }catch{
+    alert('Error while storing expense to database')
+  }
+
+fetchExpenses()
+    // setExpenses((prevState)=> {return[...prevState,expense]})
   }
   const showExpenseForm=()=>{
-    console.log('ll');
       setIsExpense(true)
   }
   const closeExpenseForm=()=>{

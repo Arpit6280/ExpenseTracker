@@ -55,7 +55,7 @@ function Welcome(props) {
      <hr />
     {/* <ul className=''> */}
     {props.expenses.map((item)=>(
-      <Expenses description={item.description} price={item.price} date={item.date} category={item.category} />
+      <Expenses key={item.id} description={item.description} price={item.price} date={item.date} category={item.category} />
       // <li>{item.description} {item.price} {item.date} {item.category} </li>
     ))}
     </div>
