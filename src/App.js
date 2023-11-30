@@ -1,18 +1,22 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Registration from "./components/Pages/Registration";
 import Login from "./components/Pages/Login";
 import Welcome from "./components/Pages/Welcome";
 import Profile from "./components/Pages/Profile";
-import { Fragment, useCallback, useContext, useEffect, useState } from "react";
-import AuthContext from "./store/auth-context";
+import { Fragment, useCallback,  useEffect, useState } from "react";
 import ForgotPassword from "./components/Pages/ForgotPassword";
 import AddExpense from "./components/AddExpense";
+import { useSelector, useDispatch } from "react-redux";
+import { expenseAction } from "./store/expense-reducer";
+
 
 function App() {
   const [isExpense, setIsExpense] = useState(false);
   const [expenses, setExpenses] = useState([]);
   const [editId, setEditId] = useState(null);
-
+  const dispatch=useDispatch();
+  const isLoggedIn=useSelector(state=>state.auth.isLoggedIn)
+  // isLoggedIn
   const fetchExpenses = useCallback(async () => {
     try {
       const response = await fetch(
@@ -30,8 +34,10 @@ function App() {
             price: data[key].price,
             date: data[key].date,
           });
-          setExpenses(loadexpenses);
+          
         }
+        dispatch(expenseAction.addExpenses(loadexpenses));
+        setExpenses(loadexpenses);
       } else {
         alert("Error");
       }
@@ -97,12 +103,12 @@ function App() {
     console.log(id);
     console.log(id.category);
   };
-  const authCtx = useContext(AuthContext);
+  // const authCtx = useContext(AuthContext);
   return (
     <Fragment>
       <BrowserRouter>
         <Routes>
-          {authCtx.isLoggedIn && (
+          {isLoggedIn && (
             <Route
               path="/"
               element={
@@ -115,7 +121,7 @@ function App() {
               }
             />
           )}
-          {authCtx.isLoggedIn && (
+          {isLoggedIn && (
             <Route path="/profile" element={<Profile />} />
           )}
           <Route path="/registration" element={<Registration />} />

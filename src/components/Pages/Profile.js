@@ -5,15 +5,18 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import styles from "./Profile.module.css";
-import AuthContext from "../../store/auth-context";
+// import AuthContext from "../../store/auth-context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
+import { useSelector } from "react-redux";
+
 
 function Profile() {
   const [name, setName] = useState("");
   const [photoUrl, setPhotoUrl] = useState("");
 
-  const authCtx = useContext(AuthContext);
+  const token=useSelector(state=>state.auth.token)
+  // const authCtx = useContext(AuthContext);
 
   const setNameHandler = (e) => {
     setName(e.target.value);
@@ -25,7 +28,7 @@ function Profile() {
     e.preventDefault();
 
     let user = {
-      idToken: authCtx.token,
+      idToken: token,
       displayName: name,
       photoUrl: photoUrl,
       returnSecureToken: true,

@@ -2,13 +2,19 @@ import React, { Fragment, useContext } from "react";
 import styles from "./Welcome.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
-import AuthContext from "../../store/auth-context";
+// import AuthContext from "../../store/auth-context";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Expenses from "../Expenses";
+import { useDispatch, useSelector } from "react-redux";
+import { authActions } from "../../store/auth-reducer";
+
+
+
 
 function Welcome(props) {
-  const authCtx = useContext(AuthContext);
+  const token=useSelector(state=> state.auth.token)
+  const dispatch=useDispatch();
   const navigate = useNavigate();
   const verifyEmailHandler = async () => {
     try {
@@ -17,7 +23,7 @@ function Welcome(props) {
         {
           method: "POST",
           body: JSON.stringify({
-            idToken: authCtx.token,
+            idToken: token,
             requestType: "VERIFY_EMAIL",
           }),
         }
@@ -36,7 +42,7 @@ function Welcome(props) {
     }
   };
   const logoutHandler = () => {
-    authCtx.logout();
+    dispatch(authActions.logout())
     navigate("/login", { replace: true });
   };
   return (

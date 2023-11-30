@@ -3,9 +3,12 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { useSelector } from "react-redux";
 
 function Expenses(props) {
+  const expenses=useSelector(state=>state.expense.expenses)
   const deleteExpense = async () => {
+   
     const res = await fetch(
       `https://react-http-62209-default-rtdb.firebaseio.com/expense/${props.id}.json`,
       {
@@ -19,6 +22,7 @@ function Expenses(props) {
     props.showExpenseForm();
     props.editIdHandler(props.id);
   };
+  console.log(expenses);
 
   return (
     <Fragment>

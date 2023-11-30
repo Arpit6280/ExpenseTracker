@@ -5,17 +5,20 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 
+
 import "../node_modules/react-bootstrap/dist/react-bootstrap.js"
 import "../node_modules/bootstrap/dist/css/bootstrap.css"
-import { AuthProvider } from './store/auth-context.js';
+// import { AuthProvider } from './store/auth-context.js';
+import { Provider } from 'react-redux';
+import store from './store/index.js';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <>
-  <AuthProvider>
+  <Provider store={store}>
     <App />
-    </AuthProvider>
+    </Provider>
   </>
 );
 

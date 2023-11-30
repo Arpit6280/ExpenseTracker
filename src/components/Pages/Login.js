@@ -6,14 +6,17 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import styles from "./Login.module.css";
 import { Link, Navigate, useNavigate } from "react-router-dom";
-import AuthContext from "../../store/auth-context";
+import { useDispatch } from "react-redux";
+import { authActions } from "../../store/auth-reducer";
+// import AuthContext from "../../store/auth-context";
+
 
 function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const authCtx = useContext(AuthContext);
+  const dispatch =useDispatch(); 
 
   const emailHandler = (e) => {
     setEmail(e.target.value);
@@ -47,7 +50,8 @@ function Login() {
         console.log(data);
         console.log(data.email);
         console.log(data.idToken);
-        authCtx.login(data.idToken);
+        dispatch(authActions.login(data.idToken))
+        // authCtx.login(data.idToken);
         navigate("/", { replace: true });
       } else {
         response.json().then((data) => {
