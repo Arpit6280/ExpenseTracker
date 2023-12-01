@@ -16,6 +16,8 @@ function App() {
   const [editId, setEditId] = useState(null);
   const dispatch=useDispatch();
   const isLoggedIn=useSelector(state=>state.auth.isLoggedIn)
+  const color=useSelector(state=>state.theme.color)
+  const backgroundColor=useSelector(state=>state.theme.backgroundColor)
   // isLoggedIn
   const fetchExpenses = useCallback(async () => {
     try {
@@ -106,6 +108,7 @@ function App() {
   // const authCtx = useContext(AuthContext);
   return (
     <Fragment>
+      <div style={{color:`${color}`, backgroundColor:`${backgroundColor}`}}>
       <BrowserRouter>
         <Routes>
           {isLoggedIn && (
@@ -137,6 +140,7 @@ function App() {
           editId={editId}
         />
       )}
+      </div>
     </Fragment>
   );
 }

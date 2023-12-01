@@ -7,13 +7,14 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Expenses from "../Expenses";
 import { useDispatch, useSelector } from "react-redux";
-import { authActions } from "../../store/auth-reducer";
-
-
+import authReducer, { authActions } from "../../store/auth-reducer";
+import themeReducer, {  themeActions } from "../../store/theme-reducer";
 
 
 function Welcome(props) {
   const token=useSelector(state=> state.auth.token)
+  const theme=useSelector(state=> state.theme.themes)
+
   const dispatch=useDispatch();
   const navigate = useNavigate();
   const verifyEmailHandler = async () => {
@@ -41,6 +42,15 @@ function Welcome(props) {
       console.log("Error while verifying Email");
     }
   };
+  const changeThemes=()=>{
+    console.log(theme);
+    // dispatch(authR)
+     if(theme){
+       dispatch(themeActions.darkTheme())
+     }else{
+      dispatch(themeActions.lightTheme())
+     }
+  }
   const logoutHandler = () => {
     dispatch(authActions.logout())
     navigate("/login", { replace: true });
@@ -73,6 +83,12 @@ function Welcome(props) {
         }}
       >
         Add Expenses
+      </Button>
+      <Button
+        className="text-center"
+        onClick= {changeThemes}
+      >
+        Theme
       </Button>
       <div className={styles.table}>
         <Row>
